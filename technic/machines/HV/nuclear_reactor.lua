@@ -402,6 +402,20 @@ local digiline_remote_def = function(pos, channel, msg)
 	end
 end
 
+local tube = {
+    insert_object = function(pos, node, stack, direction)
+        local meta = minetest.get_meta(pos)
+        local inv = meta:get_inventory()
+        return inv:add_item("src", stack)
+    end,
+    can_insert = function(pos, node, stack, direction)
+        local meta = minetest.get_meta(pos)
+        local inv = meta:get_inventory()
+        return inv:room_for_item("src", stack)
+    end,
+    connect_sides = {top=1},
+}
+
 minetest.register_node("technic:hv_nuclear_reactor_core", {
 	description = reactor_desc,
 	tiles = {
@@ -410,7 +424,9 @@ minetest.register_node("technic:hv_nuclear_reactor_core", {
 	},
 	drawtype = "mesh",
 	mesh = "technic_reactor.obj",
-	groups = {cracky = 1, technic_machine = 1, technic_hv = 1, digiline_remote_receive = 1},
+    tube = tube,
+	groups = {cracky = 1, technic_machine = 1, technic_hv = 1, digiline_remote_receive = 1,
+        tubedevice=1, tubedevice_receiver=1},
 	legacy_facedir_simple = true,
 	sounds = default.node_sound_wood_defaults(),
 	paramtype = "light",
@@ -444,8 +460,9 @@ minetest.register_node("technic:hv_nuclear_reactor_core_active", {
 	},
 	drawtype = "mesh",
 	mesh = "technic_reactor.obj",
+    tube = tube,
 	groups = {cracky = 1, technic_machine = 1, technic_hv = 1, radioactive = 4,
-		not_in_creative_inventory = 1, digiline_remote_receive = 1},
+		not_in_creative_inventory = 1, digiline_remote_receive = 1, tubedevice=1, tubedevice_receiver=1},
 	legacy_facedir_simple = true,
 	sounds = default.node_sound_wood_defaults(),
 	drop = "technic:hv_nuclear_reactor_core",
