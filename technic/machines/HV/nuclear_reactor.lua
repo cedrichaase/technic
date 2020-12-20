@@ -107,7 +107,7 @@ section through the middle:
 	CCCC CCCC
 	CBBB BBBC
 	CBLL LLBC
-	CBLWWWLBC
+	CBLW WLBC
 	CBLW#WLBC
 	CBLW|WLBC
 	CBLL|LLBC
@@ -203,10 +203,10 @@ local function reactor_structure_badness(pos)
 		lead_layer = steel_layer
 	end
 
-	if water_layer > 25 then water_layer = 25 end
+	if water_layer > 24 then water_layer = 24 end
 	if lead_layer > 96 then lead_layer = 96 end
 	if blast_layer > 216 then blast_layer = 216 end
-	return (25 - water_layer) + (96 - lead_layer) + (216 - blast_layer)
+	return (24 - water_layer) + (96 - lead_layer) + (216 - blast_layer)
 end
 
 
